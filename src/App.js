@@ -21,22 +21,37 @@ import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./styles/appTheme.css";
 
-/**
- * Layout only for main (protected) pages.
- * Login/Register iske bahar rahenge, isliye waha scroll issue nahi aayega.
- */
 const MainLayout = ({ children }) => {
   const location = useLocation();
 
-  // login/register pe navbar nahi chahiye (safety ke लिए, waise bhi use nahi karenge)
-  const hideNavbar =
+  const hideLayout =
     location.pathname === "/login" || location.pathname === "/register";
+
+  if (hideLayout) {
+    return children;
+  }
 
   return (
     <div className="app-root-esports">
-      {!hideNavbar && <Navbar />}
-      <main className="app-main-esports">{children}</main>
-      {!hideNavbar && <Footer />}
+      {/* top bar only logout + logo */}
+      <header className="app-topbar">
+        <div className="app-topbar-left">
+          <span className="app-topbar-logo-main">BGMI</span>
+          <span className="app-topbar-logo-sub">Esports</span>
+        </div>
+        <div className="app-topbar-right">
+          <Navbar variant="top-logout" />
+        </div>
+      </header>
+
+      {/* page content with bottom padding for nav */}
+      <main className="app-main-esports has-bottom-nav">{children}</main>
+
+      {/* bottom navigation tabs */}
+      <Navbar variant="bottom-tabs" />
+
+      {/* optional footer (desktop ke liye zyda useful) */}
+      <Footer />
     </div>
   );
 };
@@ -45,11 +60,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* ---------- Public auth routes (no layout, no footer) ---------- */}
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ---------- Protected routes with layout ---------- */}
+        {/* Protected + layout */}
         <Route
           path="/"
           element={

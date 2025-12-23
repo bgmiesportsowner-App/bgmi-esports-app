@@ -1,11 +1,9 @@
 // src/components/Navbar.jsx
 import { NavLink, useNavigate } from "react-router-dom";
-import "./Navbar.css"; // <-- yeh line add karo
+import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ variant = "bottom-tabs" }) => {
   const navigate = useNavigate();
-
-  // user logged in? localStorage me bgmi_user hai to true
   const isAuthenticated = !!localStorage.getItem("bgmi_user");
 
   const handleLogout = () => {
@@ -13,46 +11,37 @@ const Navbar = () => {
     navigate("/login", { replace: true });
   };
 
-  return (
-    <header className="nav-root">
-      <div className="nav-left">
-        <div className="nav-logo">
-          <span className="nav-logo-main">BGMI</span>
-          <span className="nav-logo-sub">Esports</span>
-        </div>
-      </div>
-
-      <nav className="nav-links">
-        <NavLink to="/" end className="nav-link">
-          Home
-        </NavLink>
-
-        <NavLink to="/my-matches" className="nav-link">
-          My Matches
-        </NavLink>
-
-        <NavLink to="/profile" className="nav-link">
-          Profile
-        </NavLink>
-
-        <NavLink to="/help" className="nav-link">
-          Help
-        </NavLink>
-      </nav>
-
-      <div className="nav-right">
+  if (variant === "top-logout") {
+    return (
+      <div className="nav-top-logout">
         {isAuthenticated && (
-          <button
-            type="button"
-            className="nav-auth-btn"
-            onClick={handleLogout}
-          >
+          <button type="button" className="nav-auth-btn" onClick={handleLogout}>
             Logout
           </button>
         )}
-        {/* not authenticated ho to right side empty rahegi */}
       </div>
-    </header>
+    );
+  }
+
+  // default: bottom tab bar
+  return (
+    <nav className="nav-bottom">
+      <NavLink to="/" end className="nav-tab">
+        <span className="nav-tab-label">Home</span>
+      </NavLink>
+
+      <NavLink to="/my-matches" className="nav-tab">
+        <span className="nav-tab-label">My Matches</span>
+      </NavLink>
+
+      <NavLink to="/profile" className="nav-tab">
+        <span className="nav-tab-label">Profile</span>
+      </NavLink>
+
+      <NavLink to="/help" className="nav-tab">
+        <span className="nav-tab-label">Help</span>
+      </NavLink>
+    </nav>
   );
 };
 

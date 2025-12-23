@@ -15,7 +15,7 @@
   margin-top: 8px;
 }
 
-/* Mobile fine‑tune (optional) */
+/* Mobile fine‑tune */
 @media (max-width: 480px) {
   .register-screen .auth-heading {
     font-size: 18px;
@@ -25,7 +25,6 @@
     font-size: 11px;
   }
 
-  /* ensure same compact spacing as login */
   .register-screen .auth-footer-row {
     margin-top: 6px;
   }

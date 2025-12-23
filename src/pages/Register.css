@@ -1,13 +1,27 @@
+/* Common auth styles from Login */
 @import "./Login.css";
 
-.auth-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+/* Register specific wrapper */
+.register-screen .auth-heading {
+  margin-bottom: 4px;
 }
 
-@media (max-width: 520px) {
-  .auth-grid-2 {
-    grid-template-columns: 1fr;
+.register-screen .auth-subtitle {
+  margin-bottom: 12px;
+}
+
+/* Footer text spacing */
+.register-screen .auth-footer-row {
+  margin-top: 8px;
+}
+
+/* Mobile fine‑tune (optional) */
+@media (max-width: 480px) {
+  .register-screen .auth-heading {
+    font-size: 18px;
+  }
+
+  .register-screen .auth-subtitle {
+    font-size: 11px;
   }
 }

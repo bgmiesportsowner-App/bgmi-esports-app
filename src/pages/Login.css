@@ -1,14 +1,14 @@
-/* Full screen wrapper – yahi scroll band karega */
+/* Full screen wrapper */
 .auth-screen {
-  height: 100vh;            /* exact viewport */
+  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;               /* extra space nahi */
+  padding: 0;
   background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
   position: relative;
-  overflow: hidden;         /* mouse wheel se scroll off */
+  overflow: hidden;
   color: #f9fafb;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -18,7 +18,8 @@
 .auth-bg-gradient {
   position: absolute;
   inset: -40%;
-  background: radial-gradient(circle at 30% 0%, rgba(56, 189, 248, 0.22), transparent 60%),
+  background:
+    radial-gradient(circle at 30% 0%, rgba(56, 189, 248, 0.22), transparent 60%),
     radial-gradient(circle at 70% 100%, rgba(34, 197, 94, 0.22), transparent 60%);
   filter: blur(12px);
   opacity: 0.9;
@@ -35,14 +36,14 @@
   }
 }
 
-/* Card */
+/* Card – desktop / tablet */
 .auth-card {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 480px;
-  padding: 26px 26px 22px;
-  border-radius: 26px;
+  max-width: 400px;
+  padding: 22px 20px 18px;
+  border-radius: 22px;
   background: rgba(15, 23, 42, 0.92);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.85),
@@ -55,24 +56,24 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .auth-logo-circle {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   background: radial-gradient(circle, #22c55e, #15803d);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   box-shadow: 0 0 18px rgba(22, 163, 74, 0.9);
 }
 
 .auth-logo-title {
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #e5e7eb;
@@ -81,13 +82,13 @@
 /* Heading + subtitle */
 .auth-heading {
   margin: 0 0 4px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
 }
 
 .auth-subtitle {
-  margin: 0 0 20px;
-  font-size: 13px;
+  margin: 0 0 18px;
+  font-size: 12px;
   color: #cbd5f5;
 }
 
@@ -95,31 +96,31 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
 .auth-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .auth-label {
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #9ca3af;
 }
 
 .auth-field input {
-  height: 44px;
+  height: 42px;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.4);
   background: radial-gradient(circle at 0% 0%, rgba(15, 23, 42, 0.98), #020617);
-  padding: 0 16px;
+  padding: 0 14px;
   color: #e5e7eb;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.06s ease;
 }
@@ -130,37 +131,38 @@
 
 .auth-field input:focus {
   border-color: rgba(45, 212, 191, 0.9);
-  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.85), 0 0 0 8px rgba(45, 212, 191, 0.16);
+  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.85),
+    0 0 0 8px rgba(45, 212, 191, 0.16);
   transform: translateY(-1px);
 }
 
 /* Primary button */
 .auth-btn-primary {
-  margin-top: 4px;
-  height: 46px;
+  margin-top: 2px;
+  height: 42px;
   border-radius: 999px;
   border: none;
   cursor: pointer;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   color: #020617;
   background-image: linear-gradient(90deg, #22c55e, #4ade80);
   box-shadow:
-    0 12px 30px rgba(34, 197, 94, 0.55),
+    0 10px 26px rgba(34, 197, 94, 0.55),
     0 0 0 1px rgba(22, 163, 74, 0.8);
 }
 
 /* Secondary button */
 .auth-btn-secondary {
   width: 100%;
-  height: 40px;
+  height: 36px;
   border-radius: 999px;
   border: 1px solid rgba(148, 163, 184, 0.6);
   background: rgba(15, 23, 42, 0.96);
   color: #e5e7eb;
-  font-size: 13px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,10 +170,10 @@
   cursor: pointer;
 }
 
-/* footer row */
+/* Footer row */
 .auth-footer-row {
-  margin-top: 14px;
-  font-size: 12px;
+  margin-top: 10px;
+  font-size: 11px;
   color: #9ca3af;
   display: flex;
   justify-content: center;
@@ -188,14 +190,63 @@
   text-decoration: underline;
 }
 
+/* 2‑column grid */
+.auth-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* MOBILE */
 @media (max-width: 480px) {
+  .auth-screen {
+    padding: 0 12px;
+  }
+
   .auth-card {
-    max-width: 380px;
-    padding: 22px 18px 20px;
-    border-radius: 22px;
+    max-width: 320px;
+    width: 100%;
+    padding: 14px 12px 12px;
+    border-radius: 16px;
   }
 
   .auth-heading {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .auth-subtitle {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .auth-form {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .auth-field input {
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .auth-btn-primary {
+    height: 36px;
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  .auth-btn-secondary {
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .auth-footer-row {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+
+  .auth-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }

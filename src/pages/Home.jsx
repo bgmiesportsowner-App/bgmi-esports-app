@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { tournamentsSample } from "../data/tournamentsSample";
 import TournamentCard from "../components/TournamentCard";
@@ -68,7 +68,6 @@ const Home = () => {
       <section className="section">
         <div className="section-header">
           <h2>Available Tournaments</h2>
-          {/* View all link hata diya */}
         </div>
 
         <div className="tour-grid">

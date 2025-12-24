@@ -1,12 +1,14 @@
 // src/components/ProtectedRoute.jsx
+import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  // same key jo login/register + navbar use karenge
+const ProtectedRoute = ({ children, redirectPath = "/login" }) => {
+  // Same key jo login/register + navbar use kar rahe hain
   const user = localStorage.getItem("bgmi_user");
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    // replace = true se history me /login push nahi hota, current entry replace hoti hai
+    return <Navigate to={redirectPath} replace />;
   }
 
   return children;

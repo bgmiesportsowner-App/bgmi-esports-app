@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { API_BASE } from "../config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,33 +27,32 @@ const Login = () => {
     try {
       setLoading(true);
 
-      // Firebase Auth login
-      const userCred = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      ); // [web:397]
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email.toLowerCase(),
+          password: formData.password,
+        }),
+      });
 
-      const user = userCred.user;
+      const data = await res.json().catch(() => ({}));
 
-      if (!user.emailVerified) {
-        setError("Please verify your email before entering the lobby.");
-        setLoading(false);
-        return;
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Invalid email or password");
       }
 
-      // Optional: localStorage me basic user info save (ProtectedRoute / navbar ke लिए)
-      const safeUser = {
-        uid: user.uid,
-        email: user.email,
-        createdAt: user.metadata?.creationTime || new Date().toISOString(),
-      };
-      localStorage.setItem("bgmi_user", JSON.stringify(safeUser));
+      localStorage.setItem(
+        "bgmi_user",
+        JSON.stringify({
+          user: data.user,
+        })
+      );
 
       navigate("/", { replace: true });
     } catch (err) {
       console.error("Login error:", err);
-      setError("Invalid email or password");
+      setError(err.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }

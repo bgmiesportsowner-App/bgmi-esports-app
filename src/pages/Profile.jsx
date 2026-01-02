@@ -21,135 +21,137 @@ const Profile = () => {
       const res = await axios.get(`${API_BASE}/admin/users`);
       const userData = res.data.find(u => u.profile_id === profileId);
       setUser(userData);
-      if (userData) setFormData({
-        name: userData.name,
-        email: userData.email
+      setFormData({
+        name: userData?.name || '',
+        email: userData?.email || ''
       });
     } catch (err) {
-      console.error("Profile load error:", err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEdit = () => setEditMode(true);
-  const handleCancel = () => {
+  const toggleEdit = () => setEditMode(!editMode);
+  const handleSave = () => {
+    setUser({ ...user, ...formData });
     setEditMode(false);
-    if (user) setFormData({ name: user.name, email: user.email });
-  };
-  const handleSave = async () => {
-    try {
-      setUser({ ...user, ...formData });
-      setEditMode(false);
-    } catch (err) {
-      console.error("Update error:", err);
-    }
   };
 
-  if (loading) return <div className="loading">Loading Profile...</div>;
+  if (loading) return (
+    <div className="profile-loading">
+      <div className="spinner"></div>
+      <p>Loading Player Stats...</p>
+    </div>
+  );
 
   return (
-    <div className="player-profile">
-      <div className="profile-header">
-        <div className="profile-avatar">
-          <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${profileId}`} alt="Avatar" />
-          <div className="avatar-glow"></div>
+    <div className="profile-container">
+      {/* Header Bar */}
+      <header className="profile-header">
+        <div className="header-left">
+          <h1>{user?.name || 'Player'}</h1>
+          <span className="player-id">#{profileId}</span>
         </div>
-        <div className="profile-info">
-          <h1 className="profile-name">
-            {editMode ? (
-              <input 
-                value={formData.name} 
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="edit-input"
-              />
-            ) : user?.name}
-          </h1>
-          <div className="profile-id">ID: <strong>{profileId}</strong></div>
-          <div className="profile-actions-header">
-            {editMode ? (
-              <>
-                <button onClick={handleSave} className="btn-save">💾 Save</button>
-                <button onClick={handleCancel} className="btn-cancel">❌ Cancel</button>
-              </>
-            ) : (
-              <button onClick={handleEdit} className="btn-edit">✏️ Edit Profile</button>
-            )}
+        <button className="edit-btn" onClick={toggleEdit}>
+          {editMode ? '✅ Save' : '✏️ Edit'}
+        </button>
+      </header>
+
+      {/* Avatar + Rank */}
+      <div className="profile-hero">
+        <div className="avatar-container">
+          <img 
+            src={`https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${profileId}`} 
+            alt="Player" 
+            className="player-avatar"
+          />
+          <div className="rank-badge">PRO</div>
+        </div>
+        <div className="hero-stats">
+          <div className="stat-item">
+            <span className="stat-value">4.8</span>
+            <span className="stat-label">K/D</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-value">1.2K</span>
+            <span className="stat-label">Kills</span>
           </div>
         </div>
       </div>
 
-      <div className="profile-stats-grid">
-        <div className="stat-card kills">
-          <div className="stat-icon">🔫</div>
-          <div className="stat-number">1,247</div>
-          <div className="stat-label">Total Kills</div>
+      {/* Quick Info Cards */}
+      <div className="info-cards">
+        <div className="info-card">
+          <label>Email</label>
+          {editMode ? (
+            <input 
+              value={formData.email} 
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="edit-field"
+            />
+          ) : (
+            <span className="info-value">{user?.email}</span>
+          )}
         </div>
-        <div className="stat-card wins">
+        <div className="info-card">
+          <label>Joined</label>
+          <span className="info-value">
+            {user?.created_at ? new Date(user.created_at).toLocaleDateString('hi-IN') : 'Today'}
+          </span>
+        </div>
+      </div>
+
+      {/* Stats Grid - Mobile Swipe Style */}
+      <div className="stats-grid">
+        <div className="stat-card primary">
           <div className="stat-icon">🏆</div>
-          <div className="stat-number">47</div>
-          <div className="stat-label">Wins</div>
+          <div className="stat-main">47</div>
+          <div className="stat-sub">Wins</div>
         </div>
-        <div className="stat-card kd">
-          <div className="stat-icon">⚡</div>
-          <div className="stat-number">4.8</div>
-          <div className="stat-label">K/D Ratio</div>
+        <div className="stat-card secondary">
+          <div className="stat-icon">🔥</div>
+          <div className="stat-main">#12</div>
+          <div className="stat-sub">Rank</div>
         </div>
-        <div className="stat-card rank">
-          <div className="stat-icon">👑</div>
-          <div className="stat-number">#12</div>
-          <div className="stat-label">Global Rank</div>
+        <div className="stat-card accent">
+          <div className="stat-icon">⚔️</div>
+          <div className="stat-main">89%</div>
+          <div className="stat-sub">Win Rate</div>
         </div>
       </div>
 
-      <div className="profile-details-grid">
-        <div className="detail-card contact">
-          <h3>📧 Account Details</h3>
-          <div className="detail-row">
-            <span>Email:</span>
-            {editMode ? (
-              <input 
-                value={formData.email} 
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="edit-input-small"
-              />
-            ) : (
-              <strong>{user?.email}</strong>
-            )}
-          </div>
-          <div className="detail-row">
-            <span>Joined:</span>
-            <strong>{user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'Recent'}</strong>
-          </div>
-          <div className="detail-row">
-            <span>Profile ID:</span>
-            <code>{profileId}</code>
-          </div>
-        </div>
-
-        <div className="detail-card tournaments">
-          <h3>🏆 Recent Tournaments</h3>
-          <div className="tournaments-list">
-            <div className="tournament-item gold">
-              <span>TDM Championship</span>
-              <span className="t-rank">#1</span>
+      {/* Recent Matches - Mobile Cards */}
+      <div className="matches-section">
+        <h3>Recent Matches</h3>
+        <div className="matches-list">
+          <div className="match-card win">
+            <div className="match-header">
+              <span>TDM #45</span>
+              <span className="match-result">WINNER</span>
             </div>
-            <div className="tournament-item silver">
-              <span>Classic Squads S2</span>
-              <span className="t-rank">#3</span>
+            <div className="match-stats">
+              <span>18 Kills</span>
+              <span>2nd Place</span>
             </div>
-            <div className="tournament-item">
-              <span>Scrim #47</span>
-              <span className="t-rank">Top 10</span>
+          </div>
+          <div className="match-card loss">
+            <div className="match-header">
+              <span>Classic Squads</span>
+              <span className="match-result">Top 5</span>
+            </div>
+            <div className="match-stats">
+              <span>12 Kills</span>
+              <span>5th Place</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="profile-actions">
-        <button className="btn-primary large">📤 Share Profile</button>
-        <button className="btn-secondary large">📊 Full Stats</button>
-        <button className="btn-danger large">⚠️ Report</button>
+      {/* Action Buttons */}
+      <div className="action-buttons">
+        <button className="action-btn primary">Join Tournament</button>
+        <button className="action-btn secondary">View Full Stats</button>
       </div>
     </div>
   );

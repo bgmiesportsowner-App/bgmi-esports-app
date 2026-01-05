@@ -23,15 +23,13 @@ const Profile = () => {
           stats: {
             kdRatio: '5.2', winRate: '42%', totalMatches: '567',
             chickenDinners: '156', totalKills: '3,248', avgDamage: '289'
-          },
-          recentTournaments: ['BGMI Pro Series', 'India Open']
+          }
         });
         setEditName(userData.name || 'HX Profile');
-      } catch (err) {
+      } catch {
         setProfile({
           id: 'BGMI-EB7XR', name: 'HX Profile',
-          stats: { kdRatio: '5.2', winRate: '42%', totalMatches: '567', chickenDinners: '156', totalKills: '3,248', avgDamage: '289' },
-          recentTournaments: ['Demo Series']
+          stats: { kdRatio: '5.2', winRate: '42%', totalMatches: '567', chickenDinners: '156', totalKills: '3,248', avgDamage: '289' }
         });
       } finally {
         setLoading(false);
@@ -44,17 +42,19 @@ const Profile = () => {
   const cancelEdit = () => { setEditName(profile?.name || ''); setEditingName(false); };
 
   if (loading) return <div className="loading">🔄 Loading...</div>;
-  if (error) return <div className="error">❌ {error}</div>;
 
   return (
     <div className="esports-profile">
       <header className="profile-header">
         <div className="player-card">
+          {/* LEFT DP */}
           <div className="player-avatar">
             <div className="avatar-circle">
               <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name)}&background=1e40af&color=fff&size=512`} alt="Avatar" />
             </div>
           </div>
+
+          {/* RIGHT: Name Row + ID Row */}
           <div className="player-details">
             <div className="name-row">
               {editingName ? (
@@ -72,7 +72,12 @@ const Profile = () => {
                 </>
               )}
             </div>
-            <div className="player-id">Profile ID: <strong>{profile.id}</strong></div>
+            
+            {/* Profile ID - Inline with Name Row */}
+            <div className="id-row">
+              <span className="id-label">Profile ID:</span>
+              <strong className="id-value">{profile.id}</strong>
+            </div>
           </div>
         </div>
       </header>

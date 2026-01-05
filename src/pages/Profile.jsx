@@ -1,183 +1,152 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import "./Profile.css";
-
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+import React, { useState, useEffect } from 'react';
+import './Profile.css';
 
 const Profile = () => {
-  const { profileId } = useParams();
-  const [user, setUser] = useState(null);
-  const [stats, setStats] = useState({ wins: 0, kills: 0, kd: 0, rank: 'Unranked' });
-  const [tournaments, setTournaments] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
+  const [editingName, setEditingName] = useState(false);
+  const [editName, setEditName] = useState('');
+
+  // Backend URL - Render pe change kar dena
+  const API_URL = 'http://localhost:5000';  // Ya https://bgmi-api.onrender.com
 
   useEffect(() => {
-    loadProfile();
-  }, [profileId]);
+    const fetchProfile = async () => {
+      try {
+        const userId = localStorage.getItem('userId');  // Login se save: localStorage.setItem('userId', data.user.id)
+        if (!userId) {
+          setError('Login first');
+          return;
+        }
 
-  const loadProfile = async () => {
-    try {
-      setLoading(true);
-      // User data
-      const userRes = await axios.get(`${API_BASE}/admin/users`);
-      const userData = userRes.data.find(u => u.profile_id === profileId);
-      setUser(userData);
-      setFormData({
-        name: userData?.name || '',
-        email: userData?.email || ''
-      });
+        const res = await fetch(`${API_URL}/profile/${userId}`);
+        const data = await res.json();
 
-      // Tournament stats for this player
-      const tourRes = await axios.get(`${API_BASE}/tournaments`);
-      const playerTournaments = tourRes.data.filter(t => 
-        t.players?.some(p => p.profile_id === profileId)
-      );
-      setTournaments(playerTournaments.slice(0, 5)); // Recent 5
+        if (res.ok) {
+          // Backend se real data + default stats
+          setProfile({
+            id: data.profile_id,  // Dynamic BGMI-XXXXX
+            name: data.name,
+            stats: {
+              kdRatio: '5.2',
+              winRate: '42%',
+              totalMatches: '567',
+              chickenDinners: '156',
+              totalKills: '3,248',
+              avgDamage: '289'
+            },
+            recentTournaments: ['BGMI Pro Series', 'India Open', 'Weekly Clash']
+          });
+          setEditName(data.name);
+        } else {
+          setError(data.error || 'Profile not found');
+        }
+      } catch (err) {
+        setError('Server error: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      // Calculate stats
-      const totalKills = playerTournaments.reduce((sum, t) => sum + (t.kills?.[profileId] || 0), 0);
-      const wins = playerTournaments.filter(t => t.winner === profileId).length;
-      const kd = totalKills > 0 ? (totalKills / playerTournaments.length).toFixed(1) : 0;
-      setStats({ 
-        wins, 
-        kills: totalKills, 
-        kd, 
-        rank: wins > 10 ? 'PRO' : wins > 3 ? 'ACE' : 'ROOKIE' 
-      });
+    fetchProfile();
+  }, []);
 
-    } catch (err) {
-      console.error('Profile load error:', err);
-    } finally {
-      setLoading(false);
+  const saveName = async () => {
+    // TODO: Backend update endpoint banao baad mein
+    if (profile) {
+      setProfile({ ...profile, name: editName });
     }
+    setEditingName(false);
   };
 
-  const toggleEdit = () => setEditMode(!editMode);
-
-  const handleSave = async () => {
-    try {
-      setSaving(true);
-      await axios.put(`${API_BASE}/admin/users/${profileId}`, formData);
-      setUser({ ...user, ...formData });
-      setEditMode(false);
-    } catch (err) {
-      console.error('Save error:', err);
-    } finally {
-      setSaving(false);
-    }
+  const cancelEdit = () => {
+    setEditName(profile?.name || '');
+    setEditingName(false);
   };
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  if (loading) return (
-    <div className="profile-loading">
-      <div className="spinner"></div>
-      <p>Loading Player Stats...</p>
-    </div>
-  );
+  if (loading) return <div className="loading">Loading profile...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+  if (!profile) return <div>No profile data</div>;
 
   return (
-    <div className="profile-container">
-      {/* Header Bar */}
+    <div className="esports-profile">
       <header className="profile-header">
-        <div className="header-left">
-          <h1>{user?.name || 'Player'}</h1>
-          <span className="player-id">BGMI #{profileId}</span>
+        <div className="player-card">
+          <div className="player-avatar">
+            <div className="avatar-circle">
+              <img src={`https://ui-avatars.com/api/?name=${profile.name}&background=1e40af&color=ffffff&size=140&rounded=true&bold=true`} alt="Player" />
+            </div>
+          </div>
+          <div className="player-details">
+            <div className="name-row">
+              {editingName ? (
+                <div className="edit-input-group">
+                  <input 
+                    value={editName} 
+                    onChange={(e) => setEditName(e.target.value)}
+                    className="name-input"
+                    autoFocus
+                  />
+                  <div className="edit-buttons">
+                    <button onClick={saveName} className="btn-save">Save</button>
+                    <button onClick={cancelEdit} className="btn-cancel">Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <h1>{profile.name}</h1>
+                  <button className="btn-edit-name" onClick={() => setEditingName(true)}>
+                    Edit
+                  </button>
+                </>
+              )}
+            </div>
+            <div className="player-id">Profile ID: {profile.id}</div>  {/* Dynamic ID */}
+          </div>
         </div>
-        <button className="edit-btn" onClick={toggleEdit} disabled={saving}>
-          {saving ? '💾 Saving...' : editMode ? '✅ Save' : '✏️ Edit'}
-        </button>
       </header>
 
-      {/* Avatar + Quick Stats */}
-      <div className="profile-hero">
-        <div className="avatar-container">
-          <img 
-            src={`https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${profileId}`} 
-            alt="Player Avatar" 
-            className="player-avatar"
-          />
-          <div className="rank-badge">{stats.rank}</div>
+      <section className="stats-section">
+        <h2>Performance Stats</h2>
+        <div className="stats-grid">
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.kdRatio}</div>
+            <div className="stat-label">K/D Ratio</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.winRate}</div>
+            <div className="stat-label">Win Rate</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.chickenDinners}</div>
+            <div className="stat-label">Chicken Dinners</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.totalMatches}</div>
+            <div className="stat-label">Total Matches</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.totalKills}</div>
+            <div className="stat-label">Total Kills</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-value">{profile.stats.avgDamage}</div>
+            <div className="stat-label">Avg Damage</div>
+          </div>
         </div>
-        <div className="hero-stats">
-          <div className="stat-item">
-            <span className="stat-value">{stats.kd}</span>
-            <span className="stat-label">K/D</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">{stats.kills.toLocaleString()}</span>
-            <span className="stat-label">Total Kills</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">{stats.wins}</span>
-            <span className="stat-label">Wins</span>
-          </div>
-        </div>
-      </div>
+      </section>
 
-      {/* Quick Info Cards */}
-      <div className="info-cards">
-        <div className="info-card">
-          <label>Email</label>
-          {editMode ? (
-            <input 
-              name="email"
-              value={formData.email} 
-              onChange={handleInputChange}
-              className="edit-field"
-            />
-          ) : (
-            <span className="info-value">{user?.email}</span>
-          )}
+      <section className="tournaments-section">
+        <h2>Recent Tournaments</h2>
+        <div className="tournaments-list">
+          {profile.recentTournaments.map((tournament, index) => (
+            <div key={index} className="tournament-item">
+              {tournament}
+            </div>
+          ))}
         </div>
-        <div className="info-card">
-          <label>Joined</label>
-          <span className="info-value">
-            {user?.created_at ? new Date(user.created_at).toLocaleDateString('hi-IN') : 'Recent'}
-          </span>
-        </div>
-        <div className="info-card">
-          <label>Tournaments</label>
-          <span className="info-value">{tournaments.length}</span>
-        </div>
-      </div>
-
-      {/* Recent Matches */}
-      <div className="matches-section">
-        <h3>Recent Tournaments</h3>
-        {tournaments.length > 0 ? (
-          <div className="matches-list">
-            {tournaments.map((t, i) => (
-              <div key={i} className={`match-card ${t.winner === profileId ? 'win' : 'loss'}`}>
-                <div className="match-header">
-                  <span>{t.type} #{t.id}</span>
-                  <span className="match-result">
-                    {t.winner === profileId ? 'WINNER' : `Top ${t.players.findIndex(p => p.profile_id === profileId) + 1}`}
-                  </span>
-                </div>
-                <div className="match-stats">
-                  <span>{t.kills?.[profileId] || 0} Kills</span>
-                  <span>{new Date(t.date).toLocaleDateString('hi-IN')}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="no-matches">No tournaments yet. Join one! 🎮</p>
-        )}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="action-buttons">
-        <button className="action-btn primary">🏆 Join Next TDM</button>
-        <button className="action-btn secondary">📊 Full Stats</button>
-      </div>
+      </section>
     </div>
   );
 };

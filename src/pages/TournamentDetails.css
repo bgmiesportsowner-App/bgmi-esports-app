@@ -1,4 +1,8 @@
-/* TournamentDetails.css - PHONE CENTER PERFECT - NO TEDA */
+/* TournamentDetails.css - PHONE 100% CENTER RESET - NO BHAGR */
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --bg-card: rgba(17, 24, 39, 0.95);
   --accent-blue: #3b82f6;
@@ -6,7 +10,7 @@
 
 .tdm-page {
   min-height: 100vh;
-  padding: 12px 8px;
+  padding: 10px 0;
   background: radial-gradient(circle at top, #111827 0%, #020617 70%, #000 100%);
   color: #e5e7eb;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -14,43 +18,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .tdm-container {
   width: 100%;
-  max-width: 360px; /* PERFECT PHONE WIDTH */
-  margin: 0 auto;
+  max-width: 340px;
+  height: fit-content;
   background: var(--bg-card);
   border-radius: 14px;
   border: 1px solid rgba(31, 41, 55, 0.9);
   overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-/* Header - CENTER PERFECT */
+/* Header */
 .tdm-header {
   background: rgba(17, 24, 39, 0.98);
-  padding: 16px 16px 14px;
+  padding: 15px;
   text-align: center;
   border-bottom: 1px solid rgba(31, 41, 55, 0.8);
-  width: 100%;
 }
 
 .tdm-title {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: #e5e7eb;
-  margin: 0 0 2px 0;
+  margin: 0 0 1px 0;
   line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0 4px;
 }
 
 .tdm-subtitle {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: #9ca3af;
   margin: 0;
   font-weight: 600;
@@ -58,113 +65,102 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0 4px;
 }
 
-/* Info Cards - FULL WIDTH CENTER */
+/* Info Cards - GRID PERFECT */
 .tournament-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  padding: 0;
   width: 100%;
-  table-layout: fixed;
+  padding: 0;
+  margin: 0;
 }
 
 .info-card {
-  border-right: 1px solid rgba(31, 41, 55, 0.6);
-  padding: 14px 10px;
+  border-right: 1px solid rgba(31, 41, 55, 0.5);
+  padding: 12px 8px;
   text-align: center;
-  transition: all 0.2s ease;
-  height: 65px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
-  width: 100%;
 }
 
-.info-card:last-child {
+.info-card:nth-child(2n) {
   border-right: none;
-  border-left: 1px solid rgba(31, 41, 55, 0.6);
+  border-left: 1px solid rgba(31, 41, 55, 0.5);
 }
 
 .info-card:hover {
-  background: rgba(31, 41, 55, 0.4);
+  background: rgba(31, 41, 55, 0.3);
 }
 
 .info-label {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   color: #9ca3af;
-  text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.8px;
-  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  margin-bottom: 1px;
   white-space: nowrap;
-  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0 2px;
 }
 
 .info-value {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--accent-blue);
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  padding: 0 2px;
 }
 
-/* Register Form - FULL CENTER */
+/* Register Form */
 .register-section {
-  padding: 20px 16px;
-  background: rgba(17, 24, 39, 0.85);
+  padding: 18px 15px;
+  background: rgba(17, 24, 39, 0.9);
   text-align: center;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .register-form {
   width: 100%;
-  margin: 0 auto;
-  max-width: 100%;
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   text-align: left;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .form-label {
-  display: block;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #9ca3af;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.4px;
+  padding-left: 2px;
 }
 
 .form-input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid rgba(55, 65, 81, 0.7);
+  border: 1px solid rgba(55, 65, 81, 0.6);
   border-radius: 8px;
-  background: rgba(31, 41, 55, 0.85);
+  background: rgba(31, 41, 55, 0.9);
   color: #e5e7eb;
   font-size: 0.88rem;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
+  margin: 0;
 }
 
 .form-input:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  background: rgba(31, 41, 55, 1);
 }
 
 .form-input::placeholder {
@@ -172,73 +168,62 @@
 }
 
 .register-btn {
+  width: 100%;
   background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 12px;
   border-radius: 10px;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s ease;
+  margin-top: 2px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
-  width: 100%;
-  margin-top: 4px;
-  box-sizing: border-box;
+  letter-spacing: 0.3px;
 }
 
 .register-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
 }
 
-.register-btn:active {
-  transform: translateY(0);
-}
-
-/* Back Button - PERFECT CENTER TOP */
+/* Back Button - CENTER TOP */
 .back-btn {
-  position: fixed;
+  position: absolute;
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   background: rgba(31, 41, 55, 0.95);
-  border: 1px solid rgba(55, 65, 81, 0.7);
+  border: 1px solid rgba(55, 65, 81, 0.6);
   border-radius: 10px;
-  padding: 8px 16px;
+  padding: 7px 14px;
   color: #9ca3af;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   text-decoration: none;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(12px);
-  white-space: nowrap;
+  backdrop-filter: blur(10px);
 }
 
 .back-btn:hover {
   background: rgba(55, 65, 81, 0.95);
   color: #e5e7eb;
-  border-color: var(--accent-blue);
 }
 
-/* ULTRA MOBILE - NO TEDA */
-@media (max-width: 480px) {
+/* PHONE ONLY */
+@media screen and (max-width: 430px) {
   .tdm-container {
     max-width: 100%;
-    margin: 0 4px;
+    margin: 0 6px;
+    border-radius: 12px;
+  }
+  
+  .tdm-page {
+    padding: 8px 0;
   }
 }
 
-@media (max-width: 360px) {
-  .tdm-page {
-    padding: 10px 4px;
-  }
-  
+@media screen and (max-width: 360px) {
   .tdm-container {
-    margin: 0 2px;
-    border-radius: 12px;
+    margin: 0 4px;
   }
 }

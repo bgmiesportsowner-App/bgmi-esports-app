@@ -1,6 +1,4 @@
-/* TournamentDetails.css - COMPLETE & WORKING */
-/* PERFECT SCREENSHOT MATCH - Phone No Scroll */
-
+/* TournamentDetails.css - MOBILE PERFECT FIT - SINGLE LINE TITLE */
 :root {
   --bg-card: rgba(17, 24, 39, 0.95);
   --accent-blue: #3b82f6;
@@ -8,7 +6,7 @@
 
 .tdm-page {
   min-height: 100vh;
-  padding: 20px 15px;
+  padding: 15px 10px;
   background: radial-gradient(circle at top, #111827 0%, #020617 70%, #000 100%);
   color: #e5e7eb;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -16,39 +14,49 @@
 }
 
 .tdm-container {
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
   background: var(--bg-card);
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid rgba(31, 41, 55, 0.9);
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
-/* Header */
+/* Header - SINGLE LINE TITLE ON MOBILE */
 .tdm-header {
-  background: rgba(17, 24, 39, 0.95);
-  padding: 25px 25px;
+  background: rgba(17, 24, 39, 0.98);
+  padding: 18px 18px 16px;
   text-align: center;
   border-bottom: 1px solid rgba(31, 41, 55, 0.8);
 }
 
 .tdm-title {
-  font-size: 1.8rem;
+  font-size: 1.45rem;
   font-weight: 800;
   color: #e5e7eb;
-  margin: 0 0 5px 0;
-  line-height: 1.2;
+  margin: 0 0 2px 0;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .tdm-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #9ca3af;
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Info Cards - 2 Column Phone */
+/* Info Cards - SMALLER + PERFECT MOBILE */
 .tournament-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -58,13 +66,14 @@
 
 .info-card {
   border-right: 1px solid rgba(31, 41, 55, 0.6);
-  padding: 25px 20px;
+  padding: 16px 12px;
   text-align: center;
-  transition: all 0.3s ease;
-  height: 100px;
+  transition: all 0.2s ease;
+  height: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .info-card:last-child {
@@ -73,29 +82,33 @@
 }
 
 .info-card:hover {
-  background: rgba(31, 41, 55, 0.5);
+  background: rgba(31, 41, 55, 0.4);
 }
 
 .info-label {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: #9ca3af;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
+  letter-spacing: 0.8px;
+  margin-bottom: 2px;
+  white-space: nowrap;
 }
 
 .info-value {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent-blue);
-  line-height: 1.1;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Register Form - Center + Compact */
+/* Register Form - COMPACT MOBILE */
 .register-section {
-  padding: 30px 25px;
-  background: rgba(17, 24, 39, 0.8);
+  padding: 22px 18px;
+  background: rgba(17, 24, 39, 0.85);
   text-align: center;
 }
 
@@ -105,31 +118,29 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   text-align: left;
-  max-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
 }
 
 .form-label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: #9ca3af;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
 }
 
 .form-input {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid rgba(55, 65, 81, 0.6);
+  padding: 10px 14px;
+  border: 1px solid rgba(55, 65, 81, 0.7);
   border-radius: 8px;
-  background: rgba(31, 41, 55, 0.8);
+  background: rgba(31, 41, 55, 0.85);
   color: #e5e7eb;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
@@ -137,8 +148,7 @@
 .form-input:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  background: rgba(31, 41, 55, 0.95);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
 }
 
 .form-input::placeholder {
@@ -149,78 +159,100 @@
   background: linear-gradient(135deg, var(--accent-blue), #1d4ed8);
   color: white;
   border: none;
-  padding: 14px 32px;
+  padding: 12px 28px;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  letter-spacing: 0.4px;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
   width: 100%;
-  max-width: 320px;
+  margin-top: 4px;
 }
 
 .register-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
 }
 
 .register-btn:active {
   transform: translateY(0);
 }
 
-/* Back Button */
+/* Back Button - FIXED POSITION */
 .back-btn {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
   z-index: 1000;
-  background: rgba(31, 41, 55, 0.9);
-  border: 1px solid rgba(55, 65, 81, 0.6);
-  border-radius: 12px;
-  padding: 10px 16px;
+  background: rgba(31, 41, 55, 0.95);
+  border: 1px solid rgba(55, 65, 81, 0.7);
+  border-radius: 10px;
+  padding: 8px 14px;
   color: #9ca3af;
   font-weight: 600;
+  font-size: 0.85rem;
   text-decoration: none;
   transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .back-btn:hover {
-  background: rgba(55, 65, 81, 0.9);
+  background: rgba(55, 65, 81, 0.95);
   color: #e5e7eb;
   border-color: var(--accent-blue);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .tournament-info {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .info-card {
-    height: 90px;
-    padding: 20px 15px;
-  }
-  
-  .info-value {
-    font-size: 1.1rem;
-  }
-}
-
+/* MOBILE ONLY - PERFECT PHONE FIT */
 @media (max-width: 480px) {
   .tdm-page {
-    padding: 15px 10px;
+    padding: 12px 8px;
   }
   
   .tdm-header {
-    padding: 20px 20px;
+    padding: 16px 16px 14px;
+  }
+  
+  .tdm-title {
+    font-size: 1.35rem;
+  }
+  
+  .tdm-subtitle {
+    font-size: 0.7rem;
   }
   
   .info-card {
-    height: 80px;
-    padding: 18px 12px;
+    height: 65px;
+    padding: 14px 10px;
+  }
+  
+  .info-label {
+    font-size: 0.62rem;
+  }
+  
+  .info-value {
+    font-size: 0.92rem;
+  }
+  
+  .register-section {
+    padding: 20px 16px;
+  }
+  
+  .form-input {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .tdm-title {
+    font-size: 1.25rem;
+  }
+  
+  .info-card {
+    height: 62px;
+    padding: 12px 8px;
   }
 }

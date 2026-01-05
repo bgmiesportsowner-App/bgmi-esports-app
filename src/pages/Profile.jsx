@@ -6,9 +6,6 @@ const API_URL = 'https://bgmi-api.onrender.com';
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [editingName, setEditingName] = useState(false);
-  const [editName, setEditName] = useState('');
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -25,7 +22,6 @@ const Profile = () => {
             chickenDinners: '156', totalKills: '3,248', avgDamage: '289'
           }
         });
-        setEditName(userData.name || 'HX Profile');
       } catch {
         setProfile({
           id: 'BGMI-EB7XR', name: 'HX Profile',
@@ -38,42 +34,26 @@ const Profile = () => {
     loadProfile();
   }, []);
 
-  const saveName = () => { if (profile) setProfile({ ...profile, name: editName }); setEditingName(false); };
-  const cancelEdit = () => { setEditName(profile?.name || ''); setEditingName(false); };
-
   if (loading) return <div className="loading">🔄 Loading...</div>;
 
   return (
     <div className="esports-profile">
       <header className="profile-header">
         <div className="player-card">
-          {/* LEFT DP */}
+          {/* LEFT: Perfect Circular DP */}
           <div className="player-avatar">
             <div className="avatar-circle">
-              <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name)}&background=1e40af&color=fff&size=512`} alt="Avatar" />
+              <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name)}&background=1e40af&color=fff&size=512`} alt="Gamer Avatar" />
             </div>
           </div>
 
-          {/* RIGHT: Name Row + ID Row */}
+          {/* RIGHT: Name + Profile ID */}
           <div className="player-details">
             <div className="name-row">
-              {editingName ? (
-                <>
-                  <input value={editName} onChange={(e) => setEditName(e.target.value)} className="name-input" autoFocus maxLength={15} />
-                  <div className="edit-buttons">
-                    <button onClick={saveName} className="btn-save">Save</button>
-                    <button onClick={cancelEdit} className="btn-cancel">Cancel</button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h1 className="gamer-name">{profile.name}</h1>
-                  <button className="btn-edit" onClick={() => setEditingName(true)}>Edit Name</button>
-                </>
-              )}
+              <h1 className="gamer-name">{profile.name}</h1>
             </div>
             
-            {/* Profile ID - Inline with Name Row */}
+            {/* Profile ID Inline */}
             <div className="id-row">
               <span className="id-label">Profile ID:</span>
               <strong className="id-value">{profile.id}</strong>

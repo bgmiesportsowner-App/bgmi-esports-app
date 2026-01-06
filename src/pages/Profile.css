@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+/* =========================
+   PAGE
+========================= */
 .esports-profile {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 100%);
@@ -9,6 +16,9 @@
   font-family: 'Orbitron', monospace;
 }
 
+/* =========================
+   HEADER
+========================= */
 .profile-header {
   background: rgba(10, 14, 23, 0.98);
   padding: 25px 20px;
@@ -24,7 +34,12 @@
   gap: 25px;
 }
 
-.player-avatar { flex-shrink: 0; }
+/* =========================
+   AVATAR
+========================= */
+.player-avatar {
+  flex-shrink: 0;
+}
 
 .avatar-circle {
   width: 110px;
@@ -36,15 +51,29 @@
   background: #1e40af;
 }
 
-.avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.player-details { flex: 1; }
+/* =========================
+   DETAILS
+========================= */
+.player-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;              /* NAME + ID spacing FIX */
+}
 
+/* =========================
+   NAME ROW
+========================= */
 .name-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
   gap: 12px;
   flex-wrap: nowrap;
 }
@@ -55,13 +84,15 @@
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* =========================
+   EDIT BUTTON
+========================= */
 .btn-edit {
   background: rgba(59, 130, 246, 0.2);
   color: #3b82f6 !important;
@@ -82,60 +113,46 @@
   transform: scale(1.05);
 }
 
-.name-input {
-  flex: 1;
-  padding: 10px 16px;
-  border: 2px solid #3b82f6;
-  border-radius: 25px;
-  background: rgba(30, 41, 59, 0.9);
-  color: #f8fafc;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.edit-buttons {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.btn-save, .btn-cancel {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 18px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  flex-shrink: 0;
-}
-
-.btn-save { background: #10b981; color: white; }
-.btn-cancel { background: #ef4444; color: white; }
-
-.btn-save:hover { background: #059669; transform: scale(1.05); }
-.btn-cancel:hover { background: #dc2626; transform: scale(1.05); }
-
-/* FIXED: ID Inline with Name Row */
+/* =========================
+   PROFILE ID (FINAL FIX)
+========================= */
 .id-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+
   font-size: 0.9rem;
-  color: #94a3b8;
   font-family: 'Courier New', monospace;
   font-weight: 700;
-  letter-spacing: 1px;
-  flex-wrap: nowrap;
+  letter-spacing: 0.8px;
+
+  color: #94a3b8;
+  line-height: 1.4;          /* CUT FIX */
+  min-height: 22px;          /* MOBILE SAFE */
+  padding-top: 2px;
+
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.id-label { color: #94a3b8; }
+.id-label {
+  color: #94a3b8;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
 .id-value {
   color: #60a5fa;
   font-size: 1rem;
+  line-height: 1.4;
   text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* =========================
+   STATS
+========================= */
 .stats-section {
   padding: 30px 20px;
   max-width: 1000px;
@@ -187,7 +204,11 @@
   letter-spacing: 0.5px;
 }
 
-.loading, .error {
+/* =========================
+   STATES
+========================= */
+.loading,
+.error {
   min-height: 50vh;
   display: flex;
   align-items: center;
@@ -196,20 +217,29 @@
   font-weight: 700;
 }
 
-/* PERFECT Mobile - Same as Desktop */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
   .player-card { gap: 20px; }
   .profile-header { padding: 22px 16px; }
-  .name-row { gap: 10px; }
   .gamer-name { font-size: 1.6rem; }
   .avatar-circle { width: 95px; height: 95px; }
   .stats-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 480px) {
-  .name-row { gap: 8px; }
   .gamer-name { font-size: 1.4rem; }
   .avatar-circle { width: 85px; height: 85px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .id-row { font-size: 0.85rem; }
+
+  .id-row {
+    font-size: 0.85rem;
+    min-height: 20px;
+    padding-top: 3px;
+  }
+
+  .id-value {
+    font-size: 0.95rem;
+  }
 }

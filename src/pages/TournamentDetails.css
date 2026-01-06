@@ -36,7 +36,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -47,7 +47,7 @@ html, body {
 .tdm-container {
   width: 100%;
   max-width: 340px;
-  height: 89vh;               /* FIXED HEIGHT */
+                /* FIXED HEIGHT */
   overflow: hidden;           /* NO INNER SCROLL */
   backdrop-filter: blur(25px);
   border-radius: 20px;

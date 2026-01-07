@@ -126,13 +126,8 @@ const Register = () => {
       <div className="auth-card">
         <div className="auth-logo-row">
           <div className="auth-logo-circle">BG</div>
-          <span className="auth-logo-title">BGMI ESPORTS HUB</span>
+          <span className="auth-logo-title">BGMI ESPORTS</span>
         </div>
-
-        <h1 className="auth-heading">Create your account</h1>
-        <p className="auth-subtitle">
-          Save your squads, scrims and tournament history in one profile.
-        </p>
 
         {error && <div className="auth-alert auth-alert-error">{error}</div>}
         {message && (
@@ -196,7 +191,7 @@ const Register = () => {
               className="auth-btn-primary"
               disabled={loading}
             >
-              {loading ? "SENDING OTP..." : "SEND OTP"}
+              {loading ? "REGISTER..." : "REGISTER"}
             </button>
           </form>
         ) : (
@@ -224,9 +219,9 @@ const Register = () => {
         )}
 
         <div className="auth-footer-row">
-          <span>Already registered?</span>
+          <span><h3>Already registered</h3></span>
           <Link to="/login" className="auth-link">
-            Login to lobby
+            <h3>Login</h3>
           </Link>
         </div>
       </div>

@@ -64,15 +64,11 @@ const Login = () => {
 
       <div className="auth-card">
         <div className="auth-logo-row">
-          <div className="auth-logo-circle">BG</div>
-          <span className="auth-logo-title">BGMI ESPORTS HUB</span>
+          
+         
         </div>
 
-        <h1 className="auth-heading">Welcome back</h1>
-        <p className="auth-subtitle">
-          Login to manage your custom BGMI tournaments, rooms and stats.
-        </p>
-
+        <h1 className="auth-heading">Login</h1>
         {error && <div className="auth-alert auth-alert-error">{error}</div>}
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -105,18 +101,14 @@ const Login = () => {
             className="auth-btn-primary"
             disabled={loading}
           >
-            {loading ? "ENTERING..." : "ENTER LOBBY"}
+            {loading ? "LOGIN..." : "LOGIN"}
           </button>
         </form>
 
-        <button type="button" className="auth-btn-secondary" disabled>
-          Continue with Google (coming soon)
-        </button>
-
         <div className="auth-footer-row">
-          <span>New player?</span>
+          <span><h3>Create New Account</h3></span>
           <Link to="/register" className="auth-link">
-            Create an account
+            <h3>Create Account</h3>
           </Link>
         </div>
       </div>

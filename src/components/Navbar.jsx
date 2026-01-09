@@ -37,7 +37,7 @@ const Navbar = ({ variant = "bottom-tabs" }) => {
         to="/my-matches" 
         className={({ isActive }) => `nav-tab ${isActive ? 'nav-tab-active' : ''}`}
       >
-        <span className="nav-tab-label">My Matches</span>
+        <span className="nav-tab-label">Join</span>
       </NavLink>
 
       {/* YE LINE FIX KIA - GALAT THA PEHLE */}

@@ -41,7 +41,7 @@
   border-radius: 999px;
   border: 2px solid transparent;
   background: linear-gradient(#1a0d4a, #1a0d4a) padding-box, 
-              linear-gradient(45deg, #ff9ff3, #54a0ff, #5f27cd) border-box;
+            linear-gradient(45deg, #ff9ff3, #54a0ff, #5f27cd) border-box;
   color: #fff;
   text-decoration: none;
   font-size: 14px;
@@ -68,43 +68,52 @@
   transform: translateY(-4px);
 }
 
-/* MOBILE RESPONSIVE - YE ADD KIYA */
+/* MOBILE RESPONSIVE - FIXED FOR THICK BUTTONS */
 @media (max-width: 768px) {
   .nav-bottom {
     gap: 0.5rem;
-    padding: 12px 10px;
+    padding: 16px 12px; /* Increased padding */
+    min-height: 80px; /* Button area taller */
   }
   
   .nav-tab {
-    padding: 8px 12px !important; /* Chhote buttons */
-    font-size: 12px !important;
-    min-width: 70px; /* Equal width */
-    flex: 1; /* Screen full fill */
-    max-width: 80px;
-    border-radius: 20px;
+    padding: 16px 16px !important; /* Thicker top/bottom padding */
+    font-size: 13px !important;
+    min-height: 60px; /* Minimum tall button */
+    min-width: 75px;
+    flex: 1;
+    max-width: 85px;
+    border-radius: 25px; /* Slightly larger radius */
+    border: 3px solid transparent !important; /* Thicker border */
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .nav-tab-label {
     font-size: 11px;
+    margin-top: 2px;
   }
 }
 
 /* Extra small phones */
 @media (max-width: 480px) {
   .nav-tab {
-    padding: 6px 10px !important;
-    font-size: 11px !important;
-    min-width: 60px;
+    padding: 14px 14px !important; /* Still thick */
+    font-size: 12px !important;
+    min-height: 55px;
+    min-width: 65px;
   }
 }
 
-/* Global padding */
+/* Global padding - increased for taller navbar */
 body, .page-content, main, .profile-container {
-  padding-bottom: 110px;
+  padding-bottom: 120px; /* More space for thicker navbar */
 }
 
 @media (max-width: 768px) {
   body, .page-content, main, .profile-container {
-    padding-bottom: 90px; /* Mobile me kam padding */
+    padding-bottom: 105px; /* Adjusted for mobile */
   }
 }

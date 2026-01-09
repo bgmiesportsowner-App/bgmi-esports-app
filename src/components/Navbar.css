@@ -1,4 +1,4 @@
-/* Top bar */
+/* Tera original top + desktop same */
 .nav-top-logout {
   display: flex;
   align-items: center;
@@ -22,7 +22,6 @@
     0 0 0 1px rgba(251, 191, 36, 0.8);
 }
 
-/* Bottom navigation bar */
 .nav-bottom {
   display: flex;
   gap: 1rem;
@@ -49,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: none; /* Buttons stretch nahi honge */
+  flex: none;
 }
 
 .nav-tab:hover {
@@ -68,7 +67,54 @@
   transform: translateY(-4px);
 }
 
-/* Global padding for all pages */
-body, .page-content, main, .profile-container {
-  padding-bottom: 110px;
+/* MOBILE COMPACT VERSION - PERFECT PHONE SIZE */
+@media (max-width: 768px) {
+  .nav-bottom {
+    gap: 0.3rem;
+    padding: 8px 8px;
+    height: 70px; /* Fixed height */
+  }
+  
+  .nav-tab {
+    padding: 4px 6px !important;     /* Super compact */
+    font-size: 10px !important;      /* Chhota text */
+    height: 50px;                    /* Fixed button height */
+    min-width: 48px;                 /* Perfect mobile width */
+    max-width: 55px;
+    border-radius: 18px;
+    flex: 1;
+    margin: 0 1px;
+  }
+  
+  .nav-tab-label {
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+}
+
+/* Extra small screens (iPhone SE etc.) */
+@media (max-width: 400px) {
+  .nav-tab {
+    padding: 3px 5px !important;
+    font-size: 9px !important;
+    min-width: 45px;
+    height: 45px;
+  }
+  
+  .nav-tab-label {
+    font-size: 8px;
+  }
+  
+  .nav-bottom {
+    padding: 6px 6px;
+    height: 65px;
+  }
+}
+
+/* Content padding adjust */
+@media (max-width: 768px) {
+  body, .page-content, main, .profile-container {
+    padding-bottom: 80px;
+  }
 }

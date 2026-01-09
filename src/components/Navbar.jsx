@@ -2,6 +2,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
+
 const Navbar = ({ variant = "bottom-tabs" }) => {
   const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem("bgmi_user");
@@ -25,23 +26,14 @@ const Navbar = ({ variant = "bottom-tabs" }) => {
 
   // default: bottom tab bar
   return (
-    <nav className="nav-bottom">
-      <NavLink to="/" end className="nav-tab">
-        <span className="nav-tab-label">Home</span>
-      </NavLink>
-
-      <NavLink to="/my-matches" className="nav-tab">
-        <span className="nav-tab-label">My Matches</span>
-      </NavLink>
-
-      <NavLink to="/profile" className="nav-tab">
-        <span className="nav-tab-label">Profile</span>
-      </NavLink>
-
-      <NavLink to="/help" className="nav-tab">
-        <span className="nav-tab-label">Help</span>
-      </NavLink>
-    </nav>
+   <nav>
+    <div className="nav">
+      <a href="#">Home<span></span></a>
+    <a href="#">My Matches<span></span></a>
+    <a href="#">Profile<span></span></a>
+    <a href="#">Help<span></span></a>
+    </div>
+   </nav>
   );
 };
 

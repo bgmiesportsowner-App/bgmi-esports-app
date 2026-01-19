@@ -1,12 +1,14 @@
-// src/pages/Login.jsx
+// src/pages/Login.jsx - ✅ LOCAL + PRODUCTION READY
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 /* ===============================
-   AUTH SERVER BASE URL
+   LOCAL = localhost:5001, PRODUCTION = Render API
 ================================ */
-const API_BASE = "http://localhost:5001";
+const API_BASE = process.env.NODE_ENV === 'production' 
+  ? (process.env.REACT_APP_OTP_API || "https://server-otp-register-api.onrender.com")
+  : "http://localhost:5001";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,9 +26,6 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* ===============================
-     LOGIN SUBMIT
-  ================================ */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -52,7 +51,6 @@ const Login = () => {
         throw new Error(data.error || "Invalid email or password");
       }
 
-      // ✅ SAVE USER + TOKEN (SAME STRUCTURE AS REGISTER)
       localStorage.setItem(
         "bgmi_user",
         JSON.stringify({
@@ -73,13 +71,10 @@ const Login = () => {
   return (
     <div className="auth-screen">
       <div className="auth-bg-gradient" />
-
       <div className="auth-card">
         <h1 className="auth-heading">Login</h1>
 
-        {error && (
-          <div className="auth-alert auth-alert-error">{error}</div>
-        )}
+        {error && <div className="auth-alert auth-alert-error">{error}</div>}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-field">
@@ -87,6 +82,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
+              autoComplete="email"  // ✅ FIXED
               placeholder="player@bgmi.gg"
               value={formData.email}
               onChange={handleChange}
@@ -99,6 +95,7 @@ const Login = () => {
             <input
               type="password"
               name="password"
+              autoComplete="current-password"  // ✅ FIXED
               placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
@@ -116,9 +113,7 @@ const Login = () => {
         </form>
 
         <div className="auth-footer-row">
-          <span>
-            <h3>Create New Account</h3>
-          </span>
+          <span><h3>Create New Account</h3></span>
           <Link to="/register" className="auth-link">
             <h3>Create Account</h3>
           </Link>

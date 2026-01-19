@@ -1,12 +1,14 @@
-// src/pages/Register.jsx
+// src/pages/Register.jsx - ✅ LOCAL + PRODUCTION READY
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 /* ===============================
-   AUTH SERVER BASE URL
+   LOCAL = localhost:5001, PRODUCTION = Render API
 ================================ */
-const API_BASE = "http://localhost:5001";
+const API_BASE = process.env.NODE_ENV === 'production' 
+  ? (process.env.REACT_APP_OTP_API || "https://server-otp-register-api.onrender.com")
+  : "http://localhost:5001";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -106,7 +108,6 @@ const Register = () => {
         throw new Error(data.error || "Invalid OTP");
       }
 
-      // ✅ SAVE USER + TOKEN (SAME STRUCTURE USED EVERYWHERE)
       localStorage.setItem(
         "bgmi_user",
         JSON.stringify({
@@ -116,7 +117,6 @@ const Register = () => {
       );
 
       setMessage("Account created successfully!");
-
       setTimeout(() => {
         navigate("/", { replace: true });
       }, 800);
@@ -131,16 +131,11 @@ const Register = () => {
   return (
     <div className="auth-screen register-screen">
       <div className="auth-bg-gradient" />
-
       <div className="auth-card">
         <h1 className="auth-heading">Register</h1>
 
-        {error && (
-          <div className="auth-alert auth-alert-error">{error}</div>
-        )}
-        {message && (
-          <div className="auth-alert auth-alert-success">{message}</div>
-        )}
+        {error && <div className="auth-alert auth-alert-error">{error}</div>}
+        {message && <div className="auth-alert auth-alert-success">{message}</div>}
 
         {step === "form" ? (
           <form className="auth-form" onSubmit={handleRegister}>
@@ -161,6 +156,7 @@ const Register = () => {
               <input
                 type="email"
                 name="email"
+                autoComplete="email"  // ✅ FIXED
                 placeholder="player@bgmi.gg"
                 value={formData.email}
                 onChange={handleChange}
@@ -174,6 +170,7 @@ const Register = () => {
                 <input
                   type="password"
                   name="password"
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={handleChange}
                   required
@@ -185,6 +182,7 @@ const Register = () => {
                 <input
                   type="password"
                   name="confirmPassword"
+                  autoComplete="new-password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
@@ -225,9 +223,7 @@ const Register = () => {
         )}
 
         <div className="auth-footer-row">
-          <span>
-            <h3>Already registered?</h3>
-          </span>
+          <span><h3>Already registered?</h3></span>
           <Link to="/login" className="auth-link">
             <h3>Login</h3>
           </Link>

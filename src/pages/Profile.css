@@ -216,3 +216,80 @@
     padding-bottom: 420px;
   }
 }
+/* src/components/Profile.css */
+.esports-profile {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.avatar-circle {
+  flex-shrink: 0;
+}
+
+.player-details h1 {
+  margin: 0 0 10px 0;
+  color: #1f2937;
+  font-size: 2.5em;
+}
+
+.id-row {
+  color: #6b7280;
+  font-weight: 500;
+}
+/* Profile.css में ये add करो */
+.bgmi-id-banner {
+  background: linear-gradient(135deg, #ff4444, #ff6b6b);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(255,68,68,0.4);
+}
+
+.id-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.bgmi-id {
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: monospace;
+}
+
+.copy-id {
+  cursor: pointer;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  font-size: 12px;
+  transition: all 0.3s;
+}
+
+.copy-id:hover {
+  background: rgba(255,255,255,0.3);
+}

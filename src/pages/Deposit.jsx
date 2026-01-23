@@ -9,44 +9,55 @@ export default function Deposit() {
   const navigate = useNavigate();
 
   const handleProceed = () => {
+    // ✅ Step 1: Check login
     const stored = localStorage.getItem("bgmi_user");
-
-    // ❌ Not logged in
     if (!stored) {
-      alert("Please login to deposit money");
+      alert("Please login first");
       navigate("/login");
       return;
     }
 
-    const parsed = JSON.parse(stored);
-
-    // ❌ User data missing
-    if (!parsed.user || !parsed.token) {
-      alert("Invalid login session, please login again");
-      localStorage.removeItem("bgmi_user");
-      navigate("/login");
-      return;
-    }
-
-    // ❌ Amount not selected
+    // ✅ Step 2: Check amount
     if (!selected) {
       alert("Please select amount");
       return;
     }
 
-    // ✅ All good → go to QR page
+    // ✅ Step 3: Validate user data
+    try {
+      const parsed = JSON.parse(stored);
+      const email = parsed.user?.email || parsed.email;
+
+      if (!email) {
+        alert("Invalid session, please login again");
+        localStorage.removeItem("bgmi_user");
+        navigate("/login");
+        return;
+      }
+
+      console.log("👤 Deposit user:", email);
+
+    } catch (err) {
+      console.error("❌ localStorage error:", err);
+      localStorage.removeItem("bgmi_user");
+      navigate("/login");
+      return;
+    }
+
+    // ✅ Step 4: Navigate (ONLY amount)
     navigate("/deposit/qr", {
       state: {
-        amount: selected,
-        user: parsed.user,
-      },
+        amount: selected
+      }
     });
   };
 
   return (
     <div className="deposit-page">
       <h2 className="deposit-title">Deposit</h2>
-      <p className="deposit-subtitle">Select amount to add in wallet</p>
+      <p className="deposit-subtitle">
+        Select amount to add in wallet
+      </p>
 
       <div className="amount-grid">
         {AMOUNTS.map((amt) => (

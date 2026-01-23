@@ -15,7 +15,7 @@ import TournamentDetails from "./pages/TournamentDetails";
 import MyMatches from "./pages/MyMatches";
 import Profile from "./pages/Profile";
 import Wallet from "./pages/Wallet"; 
-import DepositHistory from "./pages/DepositHistory"; // ✅ NEW IMPORT
+import DepositHistory from "./pages/DepositHistory";
 import Help from "./pages/Help";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -23,7 +23,7 @@ import Register from "./pages/Register";
 import Deposit from "./pages/Deposit";
 import DepositQR from "./pages/DepositQR";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute"; // ✅ ALREADY PERFECT
 import "./styles/appTheme.css";
 
 /* =========================
@@ -67,134 +67,75 @@ const MainLayout = ({ children }) => {
 };
 
 /* =========================
-   APP ROUTES
+   APP ROUTES - PERFECT SETUP
 ========================= */
 function App() {
   return (
     <Router>
       <Routes>
-        {/* PUBLIC */}
+        {/* 🔥 PUBLIC ROUTES (No protection needed) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/tournaments" element={<Tournaments />} /> {/* Public */}
+        <Route path="/tournaments/:id" element={<TournamentDetails />} /> {/* Public */}
+        <Route path="/help" element={<Help />} /> {/* Public */}
 
-        {/* HOME */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Home />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        {/* 🔥 PROTECTED ROUTES (MainLayout + ProtectedRoute) */}
+        <Route path="/" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        {/* TOURNAMENTS */}
-        <Route
-          path="/tournaments"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Tournaments />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/my-matches" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <MyMatches />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        <Route
-          path="/tournaments/:id"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <TournamentDetails />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/wallet" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Wallet />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        {/* MY MATCHES */}
-        <Route
-          path="/my-matches"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <MyMatches />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/deposit-history" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <DepositHistory />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        {/* WALLET */}
-        <Route
-          path="/wallet"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Wallet />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/deposit" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Deposit />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        {/* ✅ DEPOSIT HISTORY - NEW ROUTE */}
-        <Route
-          path="/deposit-history"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <DepositHistory />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/deposit/qr" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <DepositQR />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
 
-        {/* DEPOSIT */}
-        <Route
-          path="/deposit"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Deposit />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* DEPOSIT QR */}
-        <Route
-          path="/deposit/qr"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <DepositQR />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* PROFILE */}
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Profile />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* HELP */}
-        <Route
-          path="/help"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Help />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Profile />
+            </MainLayout>
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   );

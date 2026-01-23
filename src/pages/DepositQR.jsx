@@ -2,152 +2,173 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./DepositQR.css";
 
-const DEPOSIT_API = "http://localhost:5002";
+const DEPOSIT_API = "http://localhost:5001";
 
 export default function DepositQR() {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const [amount, setAmount] = useState(0);
-  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState("");
   const [utr, setUtr] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Get data from previous page
+  /* =============================
+     LOAD AMOUNT + USER EMAIL
+  ============================= */
   useEffect(() => {
-    if (location.state?.amount && location.state?.user) {
-      setAmount(location.state.amount);
-      setUser(location.state.user);
-      console.log("👤 User received:", location.state.user);
-    } else {
+    // ✅ Amount check
+    if (!location.state?.amount) {
       navigate("/deposit");
+      return;
+    }
+
+    setAmount(location.state.amount);
+
+    // ✅ Load user from localStorage
+    try {
+      const stored = localStorage.getItem("bgmi_user");
+      if (!stored) {
+        alert("Please login first");
+        navigate("/login");
+        return;
+      }
+
+      const parsed = JSON.parse(stored);
+
+      // ✅ ALL POSSIBLE EMAIL PATHS
+      const userEmail =
+        parsed.user?.email ||
+        parsed.email ||
+        parsed.userEmail;
+
+      if (!userEmail) {
+        alert("User email missing. Please login again.");
+        localStorage.removeItem("bgmi_user");
+        navigate("/login");
+        return;
+      }
+
+      setEmail(userEmail);
+      console.log("👤 Deposit user email:", userEmail);
+
+    } catch (err) {
+      console.error("❌ localStorage parse error:", err);
+      navigate("/login");
     }
   }, [location.state, navigate]);
 
+  /* =============================
+     SUBMIT DEPOSIT
+  ============================= */
   const handleSubmit = async () => {
-    if (!utr.trim()) {
-      alert("Please enter UTR number");
+    if (!utr || utr.length !== 12) {
+      alert("Please enter valid 12-digit UTR");
+      return;
+    }
+
+    if (!email) {
+      alert("User email missing. Login again.");
+      navigate("/login");
       return;
     }
 
     setLoading(true);
 
     try {
-      // 🔥 FIXED: Clear profile ID logic + EMAIL
-      const actualUser = user.user || user;
-      const profileId = actualUser.id;                    // ✅ 1768648818820 (numeric ID)
-      const bgmiDisplayId = actualUser.profile_id || actualUser.profileId;  // ✅ BGMI-C0V5W
-      const userName = actualUser.name || actualUser.username || "Unknown";
-      const userEmail = actualUser.email || "-";           // 🔥 NEW EMAIL FIELD
-
-      console.log("🔍 Profile Info:", { profileId, bgmiDisplayId, userName, userEmail });
-
       const depositData = {
-        profileId: profileId,           // ✅ Numeric ID only (1768648818820)
-        bgmiDisplayId: bgmiDisplayId,   // ✅ BGMI display ID (BGMI-C0V5W)
-        username: userName,
-        email: userEmail,               // 🔥 NEW EMAIL FIELD ✅
-        amount: amount,
-        utr: utr.trim(),
-        timestamp: new Date().toISOString()
+        email,                 // ✅ ONLY EMAIL (BACKEND MATCH)
+        amount: Number(amount),
+        utr: utr.trim()
       };
 
       console.log("📤 Sending deposit:", depositData);
 
       const response = await fetch(`${DEPOSIT_API}/api/deposit`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(depositData)
       });
 
       const result = await response.json();
-      
+
       if (!response.ok) {
-        console.error("❌ Backend error:", result);
-        throw new Error(result.message || "Deposit creation failed");
+        throw new Error(result.error || "Deposit failed");
       }
 
-      console.log("✅ Deposit created:", result);
-      setLoading(false);
+      console.log("✅ Deposit success:", result);
+
       setSuccess(true);
-      
+      setLoading(false);
+
       setTimeout(() => {
         navigate("/deposit-history");
       }, 2000);
 
     } catch (error) {
-      setLoading(false);
       console.error("❌ Deposit error:", error);
       alert("Deposit failed: " + error.message);
+      setLoading(false);
     }
   };
 
+  /* =============================
+     SUCCESS SCREEN
+  ============================= */
   if (success) {
     return (
       <div className="qr-success">
         <div className="success-icon">✅</div>
         <h2>Deposit Request Created!</h2>
-        <p>₹{amount} - Pending admin approval</p>
+        <p>₹{amount} — Pending admin approval</p>
         <p>UTR: {utr}</p>
-        <div className="loading-spinner">Redirecting to History...</div>
+        <div className="loading-spinner">Redirecting...</div>
       </div>
     );
   }
 
+  /* =============================
+     MAIN UI
+  ============================= */
   return (
     <div className="qr-page">
       <h2 className="qr-title">Pay ₹{amount}</h2>
       <p className="qr-subtitle">Enter UTR after UPI payment</p>
 
-      {/* QR Code Section */}
       <div className="qr-container">
-        <div className="qr-wrapper">
-          <img 
-            src="/qr-payment.png" 
-            alt="Payment QR Code" 
-            className="qr-image"
-          />
-          <p className="qr-info">
-            UPI ID: yourapp@paytm<br/>
-            Amount: ₹{amount}
-          </p>
-        </div>
+        <img
+          src="/qr-payment.png"
+          alt="QR Code"
+          className="qr-image"
+        />
+        <p className="qr-info">
+          UPI ID: yourapp@paytm <br />
+          Amount: ₹{amount}
+        </p>
       </div>
 
-      {/* UTR Input Section */}
       <div className="utr-section">
-        <label className="utr-label">Enter UTR Number (12 digits)</label>
+        <label>Enter UTR (12 digits)</label>
         <input
           type="text"
-          className="utr-input"
-          placeholder="123456789012"
           value={utr}
-          onChange={(e) => setUtr(e.target.value)}
           maxLength={12}
+          placeholder="123456789012"
+          onChange={(e) => setUtr(e.target.value.replace(/\D/g, ""))}
           disabled={loading}
         />
       </div>
 
-      {/* Submit Button */}
       <button
-        className={`submit-btn ${!utr.trim() ? 'disabled' : ''}`}
-        disabled={!utr.trim() || loading}
+        className="submit-btn"
+        disabled={loading || utr.length !== 12}
         onClick={handleSubmit}
       >
-        {loading ? (
-          <>
-            <span className="spinner"></span>
-            Processing...
-          </>
-        ) : (
-          "Confirm & Submit"
-        )}
+        {loading ? "Processing..." : "Confirm & Submit"}
       </button>
-
-      <div className="back-link"></div>
     </div>
   );
 }

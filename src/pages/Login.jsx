@@ -26,87 +26,54 @@ const Login = () => {
       const firebaseEmail = userCredential.user.email;
       console.log("✅ Firebase login:", firebaseEmail);
 
-      // 🔥 STEP 2: LOAD REGISTERED USERNAME FIRST (from localStorage)
-      let registeredUsername = "Akash"; // Default fallback
-      let storedUser = localStorage.getItem("bgmi_user");
-      
-      if (storedUser) {
-        try {
-          const parsedStored = JSON.parse(storedUser);
-          if (parsedStored.username) {
-            registeredUsername = parsedStored.username; // Register form wala name!
-            console.log("✅ REGISTER USERNAME LOADED:", registeredUsername);
-          }
-        } catch (e) {
-          console.log("❌ No valid stored username");
-        }
+      // 🔥 STEP 2: SERVER SE FRESH DATA (SINGLE API CALL!)
+      console.log("🔄 Fetching FRESH user data from SERVER...");
+      const loginRes = await fetch("https://main-server-firebase.onrender.com/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: firebaseEmail.toLowerCase().trim() })
+      });
+
+      const serverData = await loginRes.json();
+      console.log("🔍 SERVER LOGIN RESPONSE:", serverData);
+
+      if (!serverData.success) {
+        throw new Error("User not found in our system");
       }
 
-      // 🔥 STEP 3: Backend Register/Login with REGISTERED username
-      let backendUser = null;
-      
-      try {
-        const registerRes = await fetch("http://localhost:5001/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: firebaseEmail,
-            username: registeredUsername  // 🔥 REGISTER FORM NAME (Akash)
-          })
-        });
-
-        if (registerRes.ok) {
-          const registerData = await registerRes.json();
-          backendUser = registerData.user;
-          console.log("✅ Backend REGISTERED - BGMI ID:", backendUser.profile_id);
-        } else {
-          // User exists? Login
-          const loginRes = await fetch("http://localhost:5001/api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: firebaseEmail })
-          });
-
-          if (loginRes.ok) {
-            const loginData = await loginRes.json();
-            backendUser = loginData.user;
-            console.log("✅ Backend LOGIN - BGMI ID:", backendUser.profile_id);
-          }
-        }
-      } catch (backendErr) {
-        console.warn("Backend sync failed:", backendErr);
-      }
-
-      // 🔥 STEP 4: PRIORITY = REGISTER USERNAME (NO email split!)
-      const finalUsername = backendUser?.username || registeredUsername;
+      // 🔥 STEP 3: FRESH SERVER DATA SAVE (NO LOCALSTORAGE HACKS!)
+      const freshUser = serverData.user;
       const userData = {
         uid: userCredential.user.uid,
-        username: finalUsername,  // Akash guaranteed!
+        username: freshUser.username,           // Akash (register time wala)
         email: firebaseEmail,
-        profile_id: backendUser?.profile_id || `BGMI-${Date.now().toString().slice(-5)}`,
+        profile_id: freshUser.profile_id,       // BGMI-8535 ✅ (NO FALLBACK!)
         verified: true,
-        backend_token: backendUser?.token
+        balance: freshUser.balance || 0,
+        backend_token: freshUser.token
       };
 
-      // 🔥 STEP 5: SAVE EVERYWHERE
+      // 🔥 STEP 4: LOCALSTORAGE FRESH DATA SE UPDATE
       localStorage.setItem("bgmi_user", JSON.stringify(userData));
       sessionStorage.setItem("bgmi_user", JSON.stringify(userData));
       
-      console.log("✅ FULL LOGIN SUCCESS:", userData);
-      alert(`✅ Welcome ${finalUsername}! ID: ${userData.profile_id}`);
+      console.log("✅ LOGIN FRESH SUCCESS:", userData);
+      console.log("🔥 SAVED BGMI ID:", userData.profile_id); // BGMI-8535 ✅
+      
+      alert(`✅ Welcome ${freshUser.username}! ID: ${freshUser.profile_id}`);
       
       setTimeout(() => {
         window.location.href = "/profile";
       }, 1000);
 
     } catch (err) {
-      console.error("Login error:", err.code);
+      console.error("Login error:", err);
       if (err.code === "auth/user-not-found") {
         setError("👤 User nahi mila! Register karo.");
       } else if (err.code === "auth/wrong-password") {
         setError("🔒 Galat password!");
       } else {
-        setError("Login fail! Try again.");
+        setError("Login fail! Pehle register karo.");
       }
     } finally {
       setLoading(false);
@@ -168,14 +135,18 @@ const Login = () => {
         New player? <a href="/register" style={{ color: "#ff4444", fontWeight: "bold" }}>Register</a>
       </p>
 
-      {/* 🔥 DEBUG BUTTON */}
+      {/* 🔥 PRODUCTION DEBUG BUTTON */}
       <button 
         type="button"
-        onClick={() => {
+        onClick={async () => {
           console.log("🔍 Storage:", localStorage.getItem("bgmi_user"));
-          fetch("http://localhost:5001/api/admin/users")
-            .then(res => res.json())
-            .then(console.log);
+          try {
+            const res = await fetch("https://main-server-firebase.onrender.com/api/admin/users");
+            const data = await res.json();
+            console.log("🔍 Backend Users:", data);
+          } catch(e) {
+            console.log("Backend check failed");
+          }
         }}
         style={{
           width: "100%", padding: 8, marginTop: 10,

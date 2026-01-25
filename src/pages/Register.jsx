@@ -212,10 +212,6 @@ const Register = () => {
           <p className="login-link">
             Already registered? <a href="/login" className="login-btn">Login Now</a>
           </p>
-          <div className="features">
-            <span>✅ Secure Firebase Auth</span>
-            <span>✅ Instant Email Verification</span>
-          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-/* ✅ Micro Compact Register - Ultra Small Phone Fit */
+/* ✅ FINAL SHORT Register - No More Headache! */
 * {
   box-sizing: border-box;
 }
@@ -9,21 +9,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;  /* 👈 Tiny padding */
+  padding: 8px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .register-container {
-  max-width: 300px;  /* 👈 Micro size */
+  max-width: 270px;  /* 👈 Short card */
   width: 100%;
-  padding: 20px 16px;  /* 👈 Ultra tight */
-  border-radius: 14px;
+  padding: 14px 10px;  /* 👈 Tiny padding */
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -34,27 +32,27 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;  /* 👈 Super thin */
+  height: 2px;
   background: linear-gradient(90deg, #ff4444, #ff6b6b, #ff4444);
-  border-radius: 14px 14px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 
 .register-header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .bgmi-logo {
-  width: 55px;  /* 👈 Tiny */
-  height: 55px;
+  width: 42px;
+  height: 42px;
   background: linear-gradient(135deg, #ff4444, #ff6b6b);
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.7rem;
-  margin: 0 auto 8px;
-  box-shadow: 0 5px 18px rgba(255, 68, 68, 0.4);
+  font-size: 1.3rem;
+  margin: 0 auto 3px;
+  box-shadow: 0 3px 10px rgba(255, 68, 68, 0.4);
   animation: pulse 2s infinite;
 }
 
@@ -65,35 +63,29 @@
 
 .register-title {
   color: #fff;
-  margin: 0 0 2px 0;
-  font-size: 1.4rem;  /* 👈 Very small */
+  margin: 0 0 0 0;
+  font-size: 1.1rem;
   font-weight: 800;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #fff, #f0f0f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .register-subtitle {
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  font-size: 0.8rem;
-  font-weight: 400;
+  font-size: 0.65rem;
 }
 
 .error-message {
   background: rgba(255, 68, 68, 0.2);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 68, 68, 0.4);
-  border-radius: 6px;
-  padding: 8px;
-  margin-bottom: 12px;
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 6px;
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.8rem;
+  gap: 3px;
+  font-size: 0.7rem;
   font-weight: 500;
   animation: shake 0.5s ease-in-out;
 }
@@ -104,30 +96,26 @@
   75% { transform: translateX(2px); }
 }
 
-.error-icon {
-  font-size: 0.95rem;
-}
-
 .register-form {
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .input-group {
-  margin-bottom: 10px;  /* 👈 Micro spacing */
+  margin-bottom: 8px;  /* 👈 Tight */
 }
 
 .input-field {
   width: 100%;
-  padding: 10px 14px;  /* 👈 Tiny padding */
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
   background: rgba(118, 75, 162, 0.4);
   backdrop-filter: blur(15px);
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
+  height: 40px;  /* 👈 Short */
   transition: all 0.3s ease;
-  height: 42px;  /* 👈 Super small */
 }
 
 .input-field::placeholder {
@@ -138,59 +126,44 @@
   outline: none;
   border-color: #ff4444;
   background: rgba(118, 75, 162, 0.4);
-  backdrop-filter: blur(15px);
   color: #fff !important;
-  box-shadow: 
-    0 0 0 2px rgba(255, 68, 68, 0.25),
-    0 4px 12px rgba(0, 0, 0, 0.2);
-  transform: translateY(-0.5px);
-}
-
-.input-field:-webkit-autofill,
-.input-field:-webkit-autofill:hover,
-.input-field:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 30px rgba(118, 75, 162, 0.4) inset !important;
-  -webkit-text-fill-color: #fff !important;
-  background: rgba(118, 75, 162, 0.4) !important;
+  box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.25);
+  transform: translateY(-1px);
 }
 
 .register-button {
   width: 100%;
-  padding: 12px;  /* 👈 Micro */
+  padding: 10px;
   background: linear-gradient(135deg, #ff4444, #ff6b6b);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2px;
-  position: relative;
-  overflow: hidden;
+  height: 42px;  /* 👈 Short */
+  box-shadow: 0 3px 10px rgba(255, 68, 68, 0.4);
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(255, 68, 68, 0.4);
-  height: 44px;  /* 👈 Tiny */
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .register-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.5);
+  box-shadow: 0 5px 15px rgba(255, 68, 68, 0.5);
 }
 
 .register-button:disabled {
   background: linear-gradient(135deg, #666, #888);
   cursor: not-allowed;
-  transform: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .spinner {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: #fff;
   animation: spin 1s ease-in-out infinite;
@@ -207,8 +180,8 @@
 
 .login-link {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 12px;  /* 👈 Micro */
-  margin-bottom: 8px;
+  font-size: 10px;
+  margin-bottom: 4px;
 }
 
 .login-btn {
@@ -216,37 +189,19 @@
   font-weight: 700;
   text-decoration: none;
   background: rgba(255, 68, 68, 0.2);
-  padding: 3px 8px;
-  border-radius: 14px;
-  transition: all 0.3s ease;
-  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
 }
 
 .login-btn:hover {
   background: rgba(255, 68, 68, 0.3);
-  transform: scale(1.01);
 }
 
 .features {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-size: 10px;  /* 👈 Ultra tiny */
+  gap: 1px;
+  font-size: 8px;
   color: rgba(255, 255, 255, 0.75);
-}
-
-/* Tablet */
-@media (min-width: 768px) {
-  .register-container {
-    max-width: 340px;
-    padding: 24px 20px;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .register-container {
-    max-width: 360px;
-    padding: 26px 22px;
-  }
 }

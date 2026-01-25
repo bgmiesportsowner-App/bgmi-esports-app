@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,9 +46,9 @@ const Login = () => {
       const freshUser = serverData.user;
       const userData = {
         uid: userCredential.user.uid,
-        username: freshUser.username,           // Akash (register time wala)
+        username: freshUser.username,
         email: firebaseEmail,
-        profile_id: freshUser.profile_id,       // BGMI-8535 ✅ (NO FALLBACK!)
+        profile_id: freshUser.profile_id,
         verified: true,
         balance: freshUser.balance || 0,
         backend_token: freshUser.token
@@ -58,7 +59,7 @@ const Login = () => {
       sessionStorage.setItem("bgmi_user", JSON.stringify(userData));
       
       console.log("✅ LOGIN FRESH SUCCESS:", userData);
-      console.log("🔥 SAVED BGMI ID:", userData.profile_id); // BGMI-8535 ✅
+      console.log("🔥 SAVED BGMI ID:", userData.profile_id);
       
       alert(`✅ Welcome ${freshUser.username}! ID: ${freshUser.profile_id}`);
       
@@ -81,81 +82,78 @@ const Login = () => {
   };
 
   return (
-    <div style={{ 
-      maxWidth: 400, margin: "80px auto", padding: 30, 
-      borderRadius: 10, boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
-    }}>
-      <h2 style={{ textAlign: "center", color: "#ff4444", marginBottom: 20 }}>
-        🔐 BGMI Login
-      </h2>
-      
-      {error && (
-        <div style={{ 
-          color: "#ff4444", padding: 10, background: "#fee", 
-          borderRadius: 5, marginBottom: 15, textAlign: "center"
-        }}>
-          {error}
+    <div className="login-wrapper">
+      <div className="login-container">
+        <div className="login-header">
+          <div className="bgmi-logo">🔐</div>
+          <h2 className="login-title">BGMI Login</h2>
+          <p className="login-subtitle">Access your BGMI profile instantly</p>
         </div>
-      )}
+        
+        {error && (
+          <div className="error-message">
+            <span className="error-icon">⚠️</span>
+            {error}
+          </div>
+        )}
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email" 
-          placeholder="📧 Email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)} 
-          required
-          style={{
-            width: "100%", padding: 12, margin: "10px 0", borderRadius: 6,
-            border: "1px solid #ccc", boxSizing: "border-box"
-          }}
-        />
-        <input
-          type="password" 
-          placeholder="🔒 Password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)} 
-          required
-          style={{
-            width: "100%", padding: 12, margin: "10px 0", borderRadius: 6,
-            border: "1px solid #ccc", boxSizing: "border-box"
-          }}
-        />
-        <button type="submit" disabled={loading}
-          style={{
-            width: "100%", padding: 12, 
-            background: loading ? "#ccc" : "#ff4444", color: "white",
-            border: "none", borderRadius: 6, cursor: "pointer", fontSize: 16
-          }}>
-          {loading ? "⏳ Logging in..." : "🚀 Login & Get BGMI ID"}
-        </button>
-      </form>
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="input-group">
+            <input
+              type="email" 
+              placeholder="📧 Email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
+              required
+              className="input-field"
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password" 
+              placeholder="🔒 Password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
+              required
+              className="input-field"
+            />
+          </div>
+          <button type="submit" disabled={loading} className="login-button">
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Logging In...
+              </>
+            ) : (
+              "🚀 Login & Get BGMI ID"
+            )}
+          </button>
+        </form>
 
-      <p style={{ textAlign: "center", marginTop: 20 }}>
-        New player? <a href="/register" style={{ color: "#ff4444", fontWeight: "bold" }}>Register</a>
-      </p>
+        <div className="login-footer">
+          <p className="register-link">
+            New player? <a href="/register" className="register-btn">Register Now</a>
+          </p>
 
-      {/* 🔥 PRODUCTION DEBUG BUTTON */}
-      <button 
-        type="button"
-        onClick={async () => {
-          console.log("🔍 Storage:", localStorage.getItem("bgmi_user"));
-          try {
-            const res = await fetch("https://main-server-firebase.onrender.com/api/admin/users");
-            const data = await res.json();
-            console.log("🔍 Backend Users:", data);
-          } catch(e) {
-            console.log("Backend check failed");
-          }
-        }}
-        style={{
-          width: "100%", padding: 8, marginTop: 10,
-          background: "#28a745", color: "white", border: "none", 
-          borderRadius: 4, cursor: "pointer", fontSize: 12
-        }}
-      >
-        🔍 Check Backend Users
-      </button>
+          {/* 🔥 PRODUCTION DEBUG BUTTON */}
+          <button 
+            type="button"
+            onClick={async () => {
+              console.log("🔍 Storage:", localStorage.getItem("bgmi_user"));
+              try {
+                const res = await fetch("https://main-server-firebase.onrender.com/api/admin/users");
+                const data = await res.json();
+                console.log("🔍 Backend Users:", data);
+              } catch(e) {
+                console.log("Backend check failed");
+              }
+            }}
+            className="debug-button"
+          >
+            🔍 Check Backend Users
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

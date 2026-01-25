@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase";
 import { supabase } from "../supabaseClient";
+import './Register.css';
 
 // 🔥 PRODUCTION READY - Correct Render URL
 const API_URL = import.meta.env.VITE_API_URL || "https://main-server-firebase.onrender.com";
@@ -10,6 +11,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");  // ✅ New State
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,8 +20,21 @@ const Register = () => {
     setError("");
     setLoading(true);
 
-    if (!username.trim() || !email.trim() || !password.trim()) {
+    // ✅ Password Match Validation
+    if (password !== confirmPassword) {
+      setError("❌ Passwords match nahi kar rahe!");
+      setLoading(false);
+      return;
+    }
+
+    if (!username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
       setError("❌ Sab fields bharo!");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("🔒 Password 6+ characters ka hona chahiye!");
       setLoading(false);
       return;
     }
@@ -110,56 +125,99 @@ const Register = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "80px auto", padding: 30, borderRadius: 10, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}>
-      <h2 style={{ textAlign: "center", color: "#ff4444", marginBottom: 20 }}>📝 BGMI Register</h2>
-      
-      {error && (
-        <div style={{ color: "#ff4444", padding: 10, background: "#fee", borderRadius: 5, marginBottom: 15 }}>
-          {error}
+    <div className="register-wrapper">
+      <div className="register-container">
+        <div className="register-header">
+          <div className="bgmi-logo">🎮</div>
+          <h2 className="register-title">BGMI Register</h2>
+          <p className="register-subtitle">Join the ultimate BGMI platform</p>
         </div>
-      )}
+        
+        {error && (
+          <div className="error-message">
+            <span className="error-icon">⚠️</span>
+            {error}
+          </div>
+        )}
 
-      <form onSubmit={handleRegister}>
-        <input 
-          type="text" 
-          placeholder="🎮 Username (admin123)"
-          autocomplete="username"
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          required 
-          style={{ width: "100%", padding: 12, margin: "10px 0", borderRadius: 6, border: "1px solid #ccc", boxSizing: "border-box" }} 
-        />
-        <input 
-          type="email" 
-          placeholder="📧 Email"
-          autocomplete="email"
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-          style={{ width: "100%", padding: 12, margin: "10px 0", borderRadius: 6, border: "1px solid #ccc", boxSizing: "border-box" }} 
-        />
-        <input 
-          type="password" 
-          placeholder="🔒 Password (6+ chars)"
-          autocomplete="new-password"
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-          minLength={6}
-          style={{ width: "100%", padding: 12, margin: "10px 0", borderRadius: 6, border: "1px solid #ccc", boxSizing: "border-box" }} 
-        />
-        <button 
-          type="submit" 
-          disabled={loading}
-          style={{ width: "100%", padding: 12, background: loading ? "#ccc" : "#ff4444", color: "white", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 16 }}
-        >
-          {loading ? "⏳ Creating..." : "🔥 Register"}
-        </button>
-      </form>
+        <form onSubmit={handleRegister} className="register-form">
+          <div className="input-group">
+            <input 
+              type="text" 
+              placeholder="🎮 Username (admin123)"
+              autocomplete="username"
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              required 
+              className="input-field"
+            />
+          </div>
+          
+          <div className="input-group">
+            <input 
+              type="email" 
+              placeholder="📧 Email"
+              autocomplete="email"
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+              className="input-field"
+            />
+          </div>
+          
+          <div className="input-group">
+            <input 
+              type="password" 
+              placeholder="🔒 Password (6+ chars)"
+              autocomplete="new-password"
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+              minLength={6}
+              className="input-field"
+            />
+          </div>
 
-      <p style={{ textAlign: "center", marginTop: 20 }}>
-        Already registered? <a href="/login" style={{ color: "#ff4444", fontWeight: "bold" }}>Login</a>
-      </p>
+          {/* ✅ NEW CONFIRM PASSWORD FIELD */}
+          <div className="input-group">
+            <input 
+              type="password" 
+              placeholder="🔐 Confirm Password"
+              autocomplete="new-password"
+              value={confirmPassword} 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
+              required 
+              minLength={6}
+              className="input-field"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="register-button"
+          >
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Creating Account...
+              </>
+            ) : (
+              "🔥 Create Account"
+            )}
+          </button>
+        </form>
+
+        <div className="register-footer">
+          <p className="login-link">
+            Already registered? <a href="/login" className="login-btn">Login Now</a>
+          </p>
+          <div className="features">
+            <span>✅ Secure Firebase Auth</span>
+            <span>✅ Instant Email Verification</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

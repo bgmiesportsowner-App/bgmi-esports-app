@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Wallet.css";
 
-const API_URL = window.location.hostname === "localhost" 
-    ? "http://localhost:5002"
-    : "https://bgmi-server-save-tournament-data.onrender.com";
+const DEPOSIT_API = "http://localhost:5002";
 
 const Wallet = () => {
   const [deposits, setDeposits] = useState([]);
@@ -52,8 +50,6 @@ const Wallet = () => {
         <h1 className="wallet-balance">₹{balance}</h1>
       </div>
 
-      {/* DEPOSIT HISTORY SECTION - Removed */}
-      
       {/* ACTION BUTTONS */}
       <div className="wallet-actions">
         <button className="action-btn deposit-btn" onClick={() => window.location.href = "/deposit"}>

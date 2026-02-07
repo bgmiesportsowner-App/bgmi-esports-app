@@ -10,14 +10,37 @@
   --accent-blue: #60a5fa;
 }
 
-/* Global */
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
   color: var(--text-main);
+
+  /* IMPORTANT: page scroll */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
+
+a {
+  color: inherit;
+}
+
+/* =========================
+   ROOT LAYOUT
+========================= */
 
 .app-root-esports {
   min-height: 100vh;
@@ -25,21 +48,24 @@ body {
   flex-direction: column;
 }
 
-/* MAIN CONTENT – padding top for topbar, bottom for bottom nav */
-
+/* MAIN CONTENT */
 .app-main-esports {
   flex: 1;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 72px 16px 96px; /* top ~56px bar + spacing, bottom ~64px nav */
+
+  /* topbar = 56px, bottom nav = 70px approx */
+  padding: 72px 16px 110px;
 }
 
-/* when specifically flagged, keep bottom padding (for App.jsx) */
+/* keep bottom padding */
 .app-main-esports.has-bottom-nav {
-  padding-bottom: 96px;
+  padding-bottom: 110px;
 }
 
-/* TOP BAR (logo + logout) – used in MainLayout */
+/* =========================
+   TOP BAR
+========================= */
 
 .app-topbar {
   position: fixed;
@@ -79,7 +105,9 @@ body {
   align-items: center;
 }
 
-/* Footer */
+/* =========================
+   FOOTER
+========================= */
 
 .footer-root {
   padding: 8px 16px 12px;
@@ -96,7 +124,9 @@ body {
   opacity: 0.8;
 }
 
-/* Pages */
+/* =========================
+   PAGES
+========================= */
 
 .page-esports {
   color: var(--text-main);
@@ -109,7 +139,9 @@ body {
   margin-bottom: 18px;
 }
 
-/* Hero */
+/* =========================
+   HERO
+========================= */
 
 .hero {
   display: grid;
@@ -172,7 +204,9 @@ body {
   filter: blur(4px);
 }
 
-/* All Tournaments dropdown */
+/* =========================
+   ALL TOURNAMENTS DROPDOWN
+========================= */
 
 .all-tour-wrapper {
   position: relative;
@@ -222,7 +256,9 @@ body {
   background: rgba(31, 41, 55, 0.9);
 }
 
-/* Sections */
+/* =========================
+   SECTIONS
+========================= */
 
 .section {
   margin-top: 10px;
@@ -241,13 +277,20 @@ body {
   text-decoration: none;
 }
 
-/* Tournaments grid */
+/* =========================
+   TOURNAMENTS GRID (FINAL FIX)
+========================= */
 
+/* IMPORTANT:
+   - Cards left aligned
+   - Responsive grid
+   - Page scroll works normally
+*/
 .tour-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 14px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .tour-card {
@@ -258,7 +301,6 @@ body {
   box-shadow: 0 0 20px rgba(15, 23, 42, 0.8);
   font-size: 13px;
   width: 100%;
-  max-width: 520px;
 }
 
 .tour-header {
@@ -323,7 +365,9 @@ body {
   border: 1px solid rgba(34, 197, 94, 0.8);
 }
 
-/* Category chips */
+/* =========================
+   CATEGORY CHIPS
+========================= */
 
 .category-row {
   display: flex;
@@ -348,7 +392,9 @@ body {
   border-color: transparent;
 }
 
-/* Filters */
+/* =========================
+   FILTERS
+========================= */
 
 .filter-row {
   display: flex;
@@ -365,7 +411,9 @@ body {
   font-size: 13px;
 }
 
-/* Details */
+/* =========================
+   DETAILS
+========================= */
 
 .details-grid {
   display: grid;
@@ -395,7 +443,9 @@ body {
   color: var(--text-main);
 }
 
-/* Matches */
+/* =========================
+   MATCHES
+========================= */
 
 .matches-grid {
   display: grid;
@@ -434,7 +484,9 @@ body {
   color: var(--accent-green);
 }
 
-/* Profile */
+/* =========================
+   PROFILE
+========================= */
 
 .profile-grid {
   display: grid;
@@ -466,7 +518,9 @@ body {
   font-size: 18px;
 }
 
-/* Help */
+/* =========================
+   HELP
+========================= */
 
 .help-list {
   font-size: 13px;
@@ -479,12 +533,14 @@ body {
   color: var(--text-muted);
 }
 
-/* Mobile tweaks */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 768px) {
   .app-main-esports,
   .app-main-esports.has-bottom-nav {
-    padding: 72px 10px 96px;
+    padding: 72px 10px 100px;
   }
 
   .hero {
@@ -514,11 +570,14 @@ body {
     margin-top: 8px;
   }
 
-  .tour-grid,
-  .matches-grid,
-  .profile-grid,
-  .details-grid {
+  .details-grid,
+  .profile-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Mobile pe 1 column */
+  .tour-grid {
+    grid-template-columns: 1fr;
   }
 
   .tour-card,

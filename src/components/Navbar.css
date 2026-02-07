@@ -108,9 +108,7 @@
 }
 
 /* Global padding - fine-tuned */
-body, .page-content, main, .profile-container {
-  padding-bottom: 110px;
-}
+
 
 @media (max-width: 768px) {
   body, .page-content, main, .profile-container {

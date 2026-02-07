@@ -1,17 +1,18 @@
-// src/data/tournamentsSample.js - 🔥 NUMBER VALUES ONLY
+// src/data/tournamentsSample.js - 🔥 5 TDM TOURNEYS (BLUE + PURPLE दोनों के लिए)
 export const tournamentsSample = [
   {
     id: "tm1",
-    name: "1v1 TDM Tournament",
+    name: "1v1 TDM Fire Rush 🔥",
     type: "TDM",
     mode: "1v1 TDM",
     map: "Warehouse",
-    date: "2025-12-23",
-    time: "21:00",
-    entryFee: 50,           // ✅ PURE NUMBER!
-    prizePool: 80,          // ✅ PURE NUMBER!
+    date: "2026-02-06",
+    time: "20:00",
+    entryFee: 50,
+    prizePool: 80,
     maxSlots: 2,
     registered: 0,
-    rulesShort: "No emulators • No stream sniping • Join room 10 min before."
-  }
+    rulesShort: "No emulators • No stream sniping"
+  },
+  
 ];
